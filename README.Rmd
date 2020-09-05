@@ -1,30 +1,93 @@
 ---
-title: "Make tidy data set with "run_analysis.R""
+title: "ETL : Make tidy data set with "run_analysis.R""
 output: github_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# Purpose overview
+
+This readme file have the purpose to describe the methodology and the code steps of **run_analysis.R** file which return in output a tidy data set formed in the text file **avgMeasures.txt**.
+To get more infos on the variables output of **avgMeasures.txt**, see **variables_codebook.txt**.
+This work is made for the peer-graded assignment course project of the 4th week lesson from the *Getting and Cleaning Data* course by John Hopkins University on coursera plateform.
+The **run_analysis.R** code purpose is to extract and transform data from *Human Activity Recognition Using Smartphones Data Set Version 1.0* research [link](https://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones), source :
+
+Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
+Smartlab - Non Linear Complex Systems Laboratory
+DITEN - Università degli Studi di Genova.
+Via Opera Pia 11A, I-16145, Genoa, Italy.
+activityrecognition@smartlab.ws
+www.smartlab.ws
+
+# Summary informations before running the code
+
+## Data
+
+Data folder was download manually as a zip file from the source. Then, it was unzipped manually and directly move in the working directory without any change.
+
+## Running session
+
+```{r}
+version
 ```
 
-## GitHub Documents
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+```{r}
+# Working directory :
+getwd()
 
-## Including Code
+# Files in working directory :
+list.files(getwd())
 
-You can include R code in the document as follows:
+# Files in the unziped data source :
+list.files("./UCI HAR Dataset")
+```
+# Code steps
 
-```{r cars}
-summary(cars)
+## Libraries loaded
+
+The following packages are loaded :
+
+```{r}
+library(data.table)  ## Mostly used to read txt with fread() faster than read.table(), but could be replaced easily
+library(dplyr)       ## Mostly for merging tables, could be replace with a few more code
+library(tidyr)       ## To make tidy a messy data set
+library(readr)       ## To parse the numeric from a string, could be easily replace
 ```
 
-## Including Plots
+## Reading data
 
-You can also embed plots, for example:
+All the data is read from **UCI HAR Dataset** folder and store :
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+datafolder <- "UCI HAR Dataset/"
+
+trainfeature <- fread(file = paste(datafolder, "train/X_train.txt", sep = ""))
+trainlabel <- fread(file = paste(datafolder, "train/y_train.txt", sep = ""))
+trainsubject <- fread(file = paste(datafolder, "train/subject_train.txt", sep = ""))
+
+testfeature <- fread(file = paste(datafolder, "test/X_test.txt", sep = ""))
+testlabel <- fread(file = paste(datafolder, "test/y_test.txt", sep = ""))
+testsubject <- fread(file = paste(datafolder, "test/subject_test.txt", sep = ""))
+
+featurenames <- fread(file = paste(datafolder, "features.txt", sep = ""))
+labelnames <- fread(file = paste(datafolder, "activity_labels.txt", sep = ""))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Combine train and test datasets (measurements, activity labels and subject ids)
+
+```{r}
+combfeature <- bind_rows(trainfeature, testfeature)
+comblabels <- bind_rows(trainlabel, testlabel)
+combsubject <- bind_rows(trainsubject, testsubject)
+```
+
+Quick overview on the merged data sets :
+
+```{r}
+dim(combfeature)
+dim(comblabels)
+dim(combsubject)
+
+options(max.print= 5)
+combfeature
+```
+
