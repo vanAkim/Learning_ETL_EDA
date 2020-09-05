@@ -53,9 +53,9 @@ rm(labelnames)
 ## Slice and store in different column the features/measurements names : "tBodyAcc-mean()-X" => "tBodyAcc", "mean()", "X"
 cutstrcol <- function(coltosplit){strsplit(coltosplit, "-")}
 featurenames <- featurenames %>%
-      mutate(feature = lapply(cutstrcol(measurementname), function(elt){elt[1]}), 
-             estimate = lapply(cutstrcol(measurementname), function(elt){elt[2]}), 
-             estimateparameter = lapply(cutstrcol(measurementname), function(elt){elt[3]}))
+      mutate(feature = unlist(lapply(cutstrcol(measurementname), function(elt){elt[1]})), 
+             estimate = unlist(lapply(cutstrcol(measurementname), function(elt){elt[2]})), 
+             estimateparameter = unlist(lapply(cutstrcol(measurementname), function(elt){elt[3]})))
 
 # Delete feature full name column
 featurenames[,"measurementname"] <- NULL
