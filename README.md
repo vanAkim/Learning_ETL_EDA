@@ -1,11 +1,10 @@
 ETL : Make tidy data set
 ================
-Akim van Eersel
 September 5, 2020
 
-*Note : the present markdown is a **.Rmd** file written in Rstudio, then
-rendered by Knit in a *.md\* file, suited for Github visibility, and
-saved along the twin R markdown file.\*
+*Note : the present markdown is a Rmd file written in Rstudio, then
+rendered by Knit in a md file, suited for Github visibility, and saved
+along the twin R markdown file.*
 
 # Purpose overview
 
@@ -27,7 +26,7 @@ Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
 Smartlab - Non Linear Complex Systems Laboratory  
 DITEN - Università degli Studi di Genova.  
 Via Opera Pia 11A, I-16145, Genoa, Italy.  
-<activityrecognition@smartlab.ws>  
+<a href="mailto:activityrecognition@smartlab.ws" class="email">activityrecognition@smartlab.ws</a>  
 www.smartlab.ws
 
 # Summary informations before running the code
@@ -52,8 +51,6 @@ The output is a list with 3 explicit attributes which are :
 3.  head *or* head\_truncated.columns = the first 2 lines of the data
     frame *or* the first 2 lines and 5 columns of big data frames
 
-<!-- end list -->
-
 ``` r
 list(name = dataframe_show_explicit_name, 
      dimensions = dim(dataframe),
@@ -76,21 +73,21 @@ version
     ## system         x86_64, mingw32             
     ## status                                     
     ## major          4                           
-    ## minor          0.2                         
+    ## minor          0.3                         
     ## year           2020                        
-    ## month          06                          
-    ## day            22                          
-    ## svn rev        78730                       
+    ## month          10                          
+    ## day            10                          
+    ## svn rev        79318                       
     ## language       R                           
-    ## version.string R version 4.0.2 (2020-06-22)
-    ## nickname       Taking Off Again
+    ## version.string R version 4.0.3 (2020-10-10)
+    ## nickname       Bunny-Wunnies Freak Out
 
 ``` r
 # IDE info :
 rstudioapi::versionInfo()$version
 ```
 
-    ## [1] '1.3.1073'
+    ## [1] '1.3.1093'
 
 ### Files and folders info
 
@@ -99,7 +96,7 @@ rstudioapi::versionInfo()$version
 getwd()
 ```
 
-    ## [1] "C:/Users/Akim Van Eersel/R_Projects/Data_Science_Specialization-John_Hopkins/Getting and Cleaning Data/Learning_ETL_EDA"
+    ## [1] "C:/Users/Akim van Eersel/R_Projects/Data.Science.Specialization/Getting and Cleaning Data/Learning_ETL_EDA"
 
 ``` r
 # Files in working directory :
@@ -351,7 +348,7 @@ Quick overview on the variables renamed data sets :
 
 The goal here is to split the features names in order get only one
 variable by column.  
-Example : “tBodyAcc-mean()-X” =\> “tBodyAcc”, “mean()”, “X”  
+Example : “tBodyAcc-mean()-X” =&gt; “tBodyAcc”, “mean()”, “X”  
 The first code line is a function splitting strings at each “-”
 character.  
 The second code line apply the splitting function for the feature names
@@ -408,7 +405,7 @@ Quick overview on the updated data set :
 The first code line make a tidy data with all the features labels (still
 are “V1” to “V561”) and the measurements values.  
 The second code line parse the features labels to set only the numeric
-piece as the name : “V1” =\> “1”, “V2” =\> “2”, etc …
+piece as the name : “V1” =&gt; “1”, “V2” =&gt; “2”, etc …
 
 ``` r
 fulldata <- fulldata %>% gather(key = measurement, value = value, -(subjectid:activity))
@@ -447,9 +444,9 @@ Quick overview on the merged tidy data set :
 Finally, all data was loaded and merged to get a unique data set.  
 The next step is to follow the last project instructions :
 
-  - extract only the measurements on the mean and standard deviation for
+-   extract only the measurements on the mean and standard deviation for
     each measurement,
-  - create a second, independent tidy data set with the average of each
+-   create a second, independent tidy data set with the average of each
     variable for each activity and each subject.
 
 ## Subset some measurement features and summarize their average according to different variables

@@ -1,6 +1,5 @@
 ---
 title: "ETL : Make tidy data set"
-author: Akim van Eersel
 date: September 5, 2020
 output: github_document
 ---
@@ -9,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-*Note : the present markdown is a **.Rmd** file written in Rstudio, then rendered by Knit in a *.md* file, suited for Github visibility, and saved along the twin R markdown file.*
+*Note : the present markdown is a Rmd file written in Rstudio, then rendered by Knit in a md file, suited for Github visibility, and saved along the twin R markdown file.*
 
 # Purpose overview
 
